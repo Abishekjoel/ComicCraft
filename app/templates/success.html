@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comic exported - ComicCraft</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="hero hero-small">
+    <h1 class="logo"><span>Comic</span><span class="logo-b">Craft</span></h1>
+  </header>
+  <main class="container">
+    <section class="card success-card">
+      <div class="pow" aria-hidden="true">WOW!</div>
+      <h2 class="success-title">Comic exported successfully!</h2>
+      <dl class="success-details">
+        <div><dt>Comic</dt><dd>{{ title }}</dd></div>
+        <div><dt>Panels</dt><dd>{{ panel_count }}</dd></div>
+        <div><dt>File</dt><dd>{{ filename }}</dd></div>
+      </dl>
+      <div class="result-actions center">
+        <a class="btn btn-primary" href="{{ download_url }}" download="{{ filename }}">Download PDF</a>
+        <a class="btn btn-ghost" href="/?comic={{ comic_id }}">Back to ComicCraft</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

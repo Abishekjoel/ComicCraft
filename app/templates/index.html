@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ComicCraft - AI Comic Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="hero">
+    <h1 class="logo"><span>Comic</span><span class="logo-b">Craft</span></h1>
+    <p class="tagline">Turn your ideas into AI-powered comics.</p>
+  </header>
+
+  <main class="container">
+    {% if not gemini_configured %}
+    <div class="banner banner-warn" role="alert">
+      <strong>Gemini is not configured.</strong> Add <code>GEMINI_API_KEY</code> to your <code>.env</code> file and restart the server.
+    </div>
+    {% endif %}
+
+    <form id="comic-form" class="card form-card" novalidate>
+      <div class="field wide">
+        <label for="prompt">Story Prompt</label>
+        <textarea id="prompt" name="prompt" rows="3" maxlength="1000" required
+                  placeholder="A brave fox exploring an enchanted forest"></textarea>
+      </div>
+      <div class="field">
+        <label for="character_name">Main Character Name</label>
+        <input id="character_name" name="character_name" maxlength="50" required placeholder="Finn">
+      </div>
+      <div class="field">
+        <label for="setting">Setting</label>
+        <input id="setting" name="setting" maxlength="200" required placeholder="Enchanted forest">
+      </div>
+      <div class="field">
+        <label for="tone">Tone</label>
+        <select id="tone" name="tone">
+          <option value="funny">Funny</option>
+          <option value="dramatic">Dramatic</option>
+          <option value="adventure" selected>Adventure</option>
+          <option value="emotional">Emotional</option>
+          <option value="dark">Dark</option>
+          <option value="light-hearted">Light-hearted</option>
+          <option value="mystery">Mystery</option>
+          <option value="fantasy">Fantasy</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="art_style">Art Style</label>
+        <select id="art_style" name="art_style">
+          <option value="comic book">Comic Book</option>
+          <option value="anime" selected>Anime</option>
+          <option value="manga">Manga</option>
+          <option value="cartoon">Cartoon</option>
+          <option value="watercolor">Watercolor</option>
+          <option value="fantasy illustration">Fantasy Illustration</option>
+          <option value="cinematic">Cinematic</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="panel_count">Number of Panels</label>
+        <select id="panel_count" name="panel_count">
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </div>
+      <div class="field submit-field">
+        <button type="submit" id="generate-btn" class="btn btn-primary">Create My Comic</button>
+      </div>
+      <p id="form-error" class="form-error" role="alert" hidden></p>
+    </form>
+
+    <section id="loading" class="card loading" hidden aria-live="polite">
+      <div class="pow" aria-hidden="true">POW!</div>
+      <p id="loading-message" class="loading-message">Creating your story...</p>
+      <div class="progress"><div id="progress-bar" class="progress-bar"></div></div>
+      <p class="loading-hint">Image generation can take a while, especially on a CPU. Hang tight!</p>
+    </section>
+
+    <section id="result" class="result" hidden>
+      <div class="result-head">
+        <h2 id="comic-title" class="comic-title"></h2>
+        <div class="result-actions">
+          <button id="export-btn" class="btn btn-secondary" type="button" disabled>Export PDF</button>
+          <button id="regen-btn" class="btn btn-ghost" type="button" disabled>Regenerate</button>
+        </div>
+      </div>
+      <p id="export-error" class="form-error" role="alert" hidden></p>
+      <div id="panels" class="panels"></div>
+    </section>
+  </main>
+
+  <footer class="footer">ComicCraft &middot; stories by Gemini &middot; art by Stable Diffusion</footer>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
